@@ -38,7 +38,6 @@ const SignupForm = () => {
         body: JSON.stringify(formFields),
       }
     ).then((res) => res.json());
-    console.log(response.status);
 
     if (response.status === "success") {
       localStorage.setItem("token", response.token);

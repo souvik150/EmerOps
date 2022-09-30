@@ -39,7 +39,7 @@ const ProfImg = () => {
 
     if (response.status === 200) {
       console.log("Successfully");
-      navigate(`/dashboard`);
+      navigate(`/dashboard/${arr[4]}`);
     } else {
       console.log("Error: " + response.status);
     }
