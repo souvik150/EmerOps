@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
 import SignupForm from "./pages/SignupForm";
 import SigninForm from "./pages/SigninForm";
+import ProfImg from "./pages/ProfImg";
 
 function App() {
   const location = useLocation();
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SigninForm />} />
           <Route path="/signup" element={<SignupForm />} />
+          <Route path="/profileImg" element={<ProfImg />} />
         </Routes>
       </AnimatePresence>
     </div>

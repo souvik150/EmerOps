@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const defaultFormFields = {
   email: "",
@@ -9,6 +9,7 @@ const defaultFormFields = {
 const SigninForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const navigate = useNavigate();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -33,16 +34,14 @@ const SigninForm = () => {
         body: JSON.stringify(formFields),
       }
     ).then((res) => res.json());
-    console.log(response);
+    console.log(response.status);
 
-    // if (response.success) {
-    //   localStorage.setItem("token", response.token);
-    //   navigate("/dashboard");
-    // } else {
-    //   setError({
-    //     message: "Invalid Credientials",
-    //   });
-    // }
+    if (response.status === "success") {
+      localStorage.setItem("token", response.token);
+      navigate("/profileImg");
+    } else {
+      console.log("Error: " + response.message);
+    }
 
     resetFormFields();
   };
