@@ -34,11 +34,13 @@ const SigninForm = () => {
         body: JSON.stringify(formFields),
       }
     ).then((res) => res.json());
-    console.log(response.status);
+
+    console.log(response);
+    console.log(response.data.user._id);
 
     if (response.status === "success") {
       localStorage.setItem("token", response.token);
-      navigate("/profileImg");
+      navigate(`/users/${response.data.user._id}/prof`);
     } else {
       console.log("Error: " + response.message);
     }

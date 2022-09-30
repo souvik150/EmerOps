@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SigninForm />} />
           <Route path="/signup" element={<SignupForm />} />
-          <Route path="/profileImg" element={<ProfImg />} />
+          <Route path="/users/:id/prof" element={<ProfImg />} />
         </Routes>
       </AnimatePresence>
     </div>
