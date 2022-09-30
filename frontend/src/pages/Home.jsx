@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div>
-      <h1>Home Page</h1>
-      <Link to="/signin">Signin</Link>
+      <h1 className="pb-24">Emerops</h1>
+      <p></p>
+      <Link to="/signin" className="pr-20">
+        Signin
+      </Link>
       <Link to="/signup">Signup</Link>
     </div>
   );

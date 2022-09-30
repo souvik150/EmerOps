@@ -1,4 +1,5 @@
 import { useState, useEffect, useLocation } from "react";
+import { useNavigate } from "react-router-dom";
 import React from "react";
 
 const ProfImg = () => {
@@ -8,6 +9,8 @@ const ProfImg = () => {
 
   var x = window.location.href;
   var arr = x.split("/");
+
+  const navigate = useNavigate();
 
   console.log(
     `https://devjams-production.up.railway.app/api/v1/users/${arr[4]}/prof`
@@ -36,6 +39,7 @@ const ProfImg = () => {
 
     if (response.status === 200) {
       console.log("Successfully");
+      navigate(`/dashboard`);
     } else {
       console.log("Error: " + response.status);
     }

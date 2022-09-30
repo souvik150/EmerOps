@@ -40,7 +40,7 @@ const SigninForm = () => {
 
     if (response.status === "success") {
       localStorage.setItem("token", response.token);
-      navigate(`/users/${response.data.user._id}/prof`);
+      navigate(`/dashboard`);
     } else {
       console.log("Error: " + response.message);
     }

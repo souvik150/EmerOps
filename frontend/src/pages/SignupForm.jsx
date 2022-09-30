@@ -42,7 +42,7 @@ const SignupForm = () => {
 
     if (response.status === "success") {
       localStorage.setItem("token", response.token);
-      navigate("/profileImg");
+      navigate(`/users/${response.data.user._id}/prof`);
     } else {
       console.log("Error: " + response.message);
     }
