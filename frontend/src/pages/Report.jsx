@@ -6,7 +6,7 @@ const Report = () => {
   const [userData, setUserData] = useState({});
   let defaultForm = new FormData();
   const [url, setUrl] = useState();
-  const [ocr, setOcr] = useState("Recognizing...");
+  const [buttonText, setbuttonText] = useState("Upload");
 
   const navigate = useNavigate();
 
@@ -51,12 +51,14 @@ const Report = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: defaultForm,
-      }
+      },
+      setbuttonText("Uploading")
     );
     console.log(response);
 
     if (response.status === 200) {
       console.log("Successfully");
+      setbuttonText("Uploaded");
       navigate(`/dashboard/${arr[4]}`);
     } else {
       console.log("Error: " + response.status);
@@ -92,16 +94,14 @@ const Report = () => {
             to="/"
             className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
           >
-            Upload
+            {buttonText}
           </button>
         </form>
       </div>
       <div className="pt-20">
-        {/*<div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between">
           <p className="text-4xl py-10 font-semibold pb-24">View Reports</p>
-  </div>*/}
-
-        <p>{ocr}</p>
+        </div>
       </div>
     </div>
   );
