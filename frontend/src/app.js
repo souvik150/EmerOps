@@ -7,7 +7,7 @@ import SignupForm from "./pages/SignupForm";
 import SigninForm from "./pages/SigninForm";
 import ProfImg from "./pages/ProfImg";
 import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
+import Report from "./pages/Report";
 
 function App() {
   const location = useLocation();
@@ -21,7 +21,7 @@ function App() {
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/users/:id/prof" element={<ProfImg />} />
           <Route path="/dashboard/:id" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="users/:id/reports" element={<Report />} />
         </Routes>
       </AnimatePresence>
     </div>

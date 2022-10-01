@@ -43,6 +43,10 @@ const Dashboard = () => {
     navigate("/");
   };
 
+  const scanHandler = () => {
+    navigate(`/users/${arr[4]}/reports`);
+  };
+
   const detailsHandler = () => {
     navigate("/profile");
   };
@@ -59,8 +63,11 @@ const Dashboard = () => {
         </button>
       </div>
       <div className="w-[80vw]">
-        <button className="mr-36 bg-blue-700 py-3 px-6 text-white rounded-2xl">
-          Scan Prescription
+        <button
+          className="mr-36 bg-blue-700 py-3 px-6 text-white rounded-2xl"
+          onClick={scanHandler}
+        >
+          Upload Prescription
         </button>
         <button className="mr-36 bg-blue-700 py-3 px-6 text-white rounded-2xl">
           View Prescription

@@ -1,20 +1,19 @@
-import { useState, useEffect, useLocation } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import React from "react";
 
-const ProfImg = () => {
+const Report = () => {
   const [name, setName] = useState("");
   let defaultForm = new FormData();
   const [url, setUrl] = useState();
 
+  const navigate = useNavigate();
+
   var x = window.location.href;
   var arr = x.split("/");
 
-  const navigate = useNavigate();
-
-  console.log(
-    `https://devjams-production.up.railway.app/api/v1/users/${arr[4]}/prof`
-  );
+  const addReportHandler = () => {
+    navigate(`/users/reports/${arr[4]}`);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,7 +25,7 @@ const ProfImg = () => {
     console.log(arr[4]);
 
     const response = await fetch(
-      `https://devjams-production.up.railway.app/api/v1/users/${arr[4]}/prof`,
+      `https://devjams-production.up.railway.app/api/v1/users/${arr[4]}/reports`,
       {
         method: "POST",
         headers: {
@@ -51,7 +50,10 @@ const ProfImg = () => {
   };
 
   return (
-    <div>
+    <div className="pt-10">
+      <div className="flex flex-row justify-between">
+        <p className="text-4xl">View All Reports</p>
+      </div>
       <form
         className="form-account"
         encType="multipart/form-data"
@@ -78,4 +80,4 @@ const ProfImg = () => {
   );
 };
 
-export default ProfImg;
+export default Report;
