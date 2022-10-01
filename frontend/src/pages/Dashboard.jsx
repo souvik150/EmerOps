@@ -1,5 +1,7 @@
 import { useState, useEffect, useLocation } from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import Webcam from "react-webcam";
 
 const defaultFormFields = {
   repImg: "N/A",
@@ -19,6 +21,7 @@ const defaultFormFields = {
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(defaultFormFields);
+  const [img, setImg] = useState("");
 
   var x = window.location.href;
   var arr = x.split("/");
@@ -51,38 +54,36 @@ const Dashboard = () => {
     navigate("/updateProfile");
   };
 
+  const clickHandler = () => {};
+
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    for (var key of defaultForm.entries()) {
-      console.log(key[0] + ", " + key[1]);
-    }
-
-    console.log(arr[4]);
-
-    const response = await fetch(
-      `https://devjams-production.up.railway.app/api/v1/users/${arr[4]}/prof`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: defaultForm,
-      }
-    );
-    console.log(response);
-
-    if (response.status === 200) {
-      console.log("Successfully");
-      navigate(`/dashboard/${arr[4]}`);
-    } else {
-      console.log("Error: " + response.status);
-    }
+    // event.preventDefault();
+    // console.log(arr[4]);
+    // const response = await fetch(
+    //   ``,
+    //   {
+    //     method: "POST",
+    //     body: img,
+    //   }
+    // );
+    // console.log(response);
+    // if (response.status === 200) {
+    //   console.log("Successfully");
+    //   navigate(`/dashboard/${arr[4]}`);
+    // } else {
+    //   console.log("Error: " + response.status);
+    // }
   };
 
   const handleFileChange = (event) => {
     event.preventDefault();
     defaultForm.append("repImg", event.target.files[0]);
+  };
+
+  const videoConstraints = {
+    width: 640,
+    height: 360,
+    facingMode: "user",
   };
 
   return (
@@ -103,6 +104,41 @@ const Dashboard = () => {
             Welcome {userData.name}. Please upload the patient's photo to get
             data
           </h1>
+
+          <div className=" flex flex-col py-6 justify-between items-center">
+            <div>
+              <Webcam
+                audio={false}
+                height={360}
+                screenshotFormat="image/jpeg"
+                width={640}
+                videoConstraints={videoConstraints}
+              >
+                {({ getScreenshot }) => (
+                  <button
+                    className="px-16 mx-16 py-3 my-3 bg-blue-600 rounded-xl text-white "
+                    onClick={() => {
+                      const imageSrc = getScreenshot();
+                      setImg(imageSrc);
+                      console.log(imageSrc);
+                    }}
+                  >
+                    Capture photo
+                  </button>
+                )}
+              </Webcam>
+            </div>
+
+            {img != "" ? <img src={img} width="640" height="360" /> : null}
+            {img != "" ? (
+              <button
+                className="px-16 mx-16 py-3 my-3 bg-blue-600 rounded-xl text-white "
+                onClick={clickHandler}
+              >
+                Send photo
+              </button>
+            ) : null}
+          </div>
         </div>
       ) : (
         <div className="w-[80vw]">
@@ -125,29 +161,7 @@ const Dashboard = () => {
       )}
 
       {userData.role === "doctor" ? (
-        <div className="pt-20">
-          <form
-            className="form-account"
-            encType="multipart/form-data"
-            onSubmit={handleSubmit}
-          >
-            <div className="pic-cha">
-              <input
-                type="file"
-                accept="image/png"
-                onChange={handleFileChange}
-                id="repImg"
-              />
-            </div>
-
-            <button
-              to="/"
-              className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
-            >
-              Send Image
-            </button>
-          </form>
-        </div>
+        <div></div>
       ) : (
         <div className="w-[30vw] flex flex-col space-y-3">
           <h1 className="text-3xl font-bold pt-20 pb-6">
