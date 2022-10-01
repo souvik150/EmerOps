@@ -52,25 +52,26 @@ const ProfImg = () => {
 
   return (
     <div>
+      <div className="text-4xl py-10 font-semibold ">
+        Please upload image to continue
+      </div>
       <form
         className="form-account"
         encType="multipart/form-data"
         onSubmit={handleSubmit}
       >
-        <div className="heading-primary">Upload Image</div>
-
         <div className="pic-cha">
           <input
             type="file"
-            accept="image/png"
+            accept="image/jpg"
             onChange={handleFileChange}
             id="repImg"
           />
         </div>
-
-        <div className="heading-secondary-sm-2 mar-t">{name}</div>
-
-        <button to="/" className="button mar-t">
+        <button
+          to="/"
+          className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
+        >
           Save Changes
         </button>
       </form>

@@ -86,7 +86,12 @@ const SigninForm = () => {
             />
           </div>
 
-          <button to="/">Log In</button>
+          <button
+            to="/"
+            className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
+          >
+            Log In
+          </button>
         </form>
       </div>
     </div>
