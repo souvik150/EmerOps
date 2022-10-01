@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { createWorker } from "tesseract.js";
 
 const Report = () => {
-  const [name, setName] = useState("");
+  const [userData, setUserData] = useState({});
   let defaultForm = new FormData();
   const [url, setUrl] = useState();
+  const [ocr, setOcr] = useState("Recognizing...");
+  const [buttonText, setbuttonText] = useState("Upload");
 
   const navigate = useNavigate();
 
@@ -14,6 +17,23 @@ const Report = () => {
   const addReportHandler = () => {
     navigate(`/users/reports/${arr[4]}`);
   };
+
+  // useEffect(() => {
+  //   fetch(
+  //     `https://devjams-production.up.railway.app/api/v1/users/${arr[4]}/reports`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then(({ data }) => {
+  //       setUserData(data.reports);
+  //     });
+  // }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,12 +52,14 @@ const Report = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: defaultForm,
-      }
+      },
+      setbuttonText("Uploading")
     );
     console.log(response);
 
     if (response.status === 200) {
       console.log("Successfully");
+      setbuttonText("Uploaded");
       navigate(`/dashboard/${arr[4]}`);
     } else {
       console.log("Error: " + response.status);
@@ -47,35 +69,60 @@ const Report = () => {
   const handleFileChange = (event) => {
     event.preventDefault();
     defaultForm.append("repImg", event.target.files[0]);
+
+    const worker = createWorker({
+      logger: (m) => console.log(m),
+    });
+    const doOCR = async () => {
+      await worker.load();
+      await worker.loadLanguage("eng");
+      await worker.initialize("eng");
+      const {
+        data: { text },
+        // https://tesseract.projectnaptha.com/img/eng_bw.png
+      } = await worker.recognize(event.target.files[0]);
+      setOcr(text);
+    };
+
+    useEffect(() => {
+      doOCR();
+    });
   };
 
   return (
-    <div className="pt-10">
-      <div className="flex flex-row justify-between">
-        <p className="text-4xl">View All Reports</p>
-      </div>
-      <form
-        className="form-account"
-        encType="multipart/form-data"
-        onSubmit={handleSubmit}
-      >
-        <div className="heading-primary">Upload Image</div>
-
-        <div className="pic-cha">
-          <input
-            type="file"
-            accept="image/png"
-            onChange={handleFileChange}
-            id="repImg"
-          />
+    <div>
+      <div className="pt-10">
+        <div className="flex flex-row justify-between">
+          <p className="text-4xl py-10 font-semibold pb-24">Upload Reports</p>
         </div>
+        <form
+          className="form-account"
+          encType="multipart/form-data"
+          onSubmit={handleSubmit}
+        >
+          <div className="pic-cha">
+            <input
+              type="file"
+              accept="image/png"
+              onChange={handleFileChange}
+              id="repImg"
+            />
+          </div>
 
-        <div className="heading-secondary-sm-2 mar-t">{name}</div>
-
-        <button to="/" className="button mar-t">
-          Save Changes
-        </button>
-      </form>
+          <button
+            to="/"
+            className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
+          >
+            {buttonText}
+          </button>
+        </form>
+      </div>
+      <div className="pt-20">
+        <div className="flex flex-row justify-between">
+          <p className="text-4xl py-10 font-semibold pb-24">View Reports</p>
+          <p>{ocr}</p>
+        </div>
+      </div>
     </div>
   );
 };

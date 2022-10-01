@@ -14,6 +14,7 @@ const SignupForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, email, phone, age, password, passwordConfirm } = formFields;
   const navigate = useNavigate();
+  const [buttonText, setbuttonText] = useState("Signup");
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -36,7 +37,8 @@ const SignupForm = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formFields),
-      }
+      },
+      setbuttonText("Signing up...")
     ).then((res) => res.json());
 
     if (response.status === "success") {
@@ -137,7 +139,7 @@ const SignupForm = () => {
               to="/"
               className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
             >
-              Sign Up
+              {buttonText}
             </button>
           </div>
         </form>
