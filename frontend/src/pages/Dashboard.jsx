@@ -13,7 +13,7 @@ const defaultFormFields = {
   address: "N/A",
   weight: "N/A",
   allergies: "N/A",
-  disabilities: "N/A",
+  bloodGrp: "N/A",
 };
 
 const Dashboard = () => {
@@ -110,10 +110,7 @@ const Dashboard = () => {
             className="mr-36 bg-blue-700 py-3 px-6 text-white rounded-2xl"
             onClick={scanHandler}
           >
-            Upload Prescription
-          </button>
-          <button className="mr-36 bg-blue-700 py-3 px-6 text-white rounded-2xl">
-            View Prescription
+            Prescriptions
           </button>
           <button
             className="mr-36 bg-blue-700 py-3 px-6 text-white rounded-2xl"
@@ -185,8 +182,8 @@ const Dashboard = () => {
             <p className="text-xl">{userData.allergies}</p>
           </div>
           <div className="bg-blue-300 py-3 px-6 rounded-lg flex flex-row justify-between pb-3">
-            <p className="font-bold text-xl">Disablilities</p>
-            <p className="text-xl">{userData.disabilities}</p>
+            <p className="font-bold text-xl">Blood Group</p>
+            <p className="text-xl">{userData.bloodGrp}</p>
           </div>
         </div>
       )}

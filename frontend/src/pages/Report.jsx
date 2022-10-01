@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { createWorker } from "tesseract.js";
 
 const Report = () => {
-  const [name, setName] = useState("");
+  const [userData, setUserData] = useState({});
   let defaultForm = new FormData();
   const [url, setUrl] = useState();
+  const [ocr, setOcr] = useState("Recognizing...");
 
   const navigate = useNavigate();
 
@@ -14,6 +16,23 @@ const Report = () => {
   const addReportHandler = () => {
     navigate(`/users/reports/${arr[4]}`);
   };
+
+  // useEffect(() => {
+  //   fetch(
+  //     `https://devjams-production.up.railway.app/api/v1/users/${arr[4]}/reports`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then(({ data }) => {
+  //       setUserData(data.reports);
+  //     });
+  // }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,32 +69,40 @@ const Report = () => {
   };
 
   return (
-    <div className="pt-10">
-      <div className="flex flex-row justify-between">
-        <p className="text-4xl">View All Reports</p>
-      </div>
-      <form
-        className="form-account"
-        encType="multipart/form-data"
-        onSubmit={handleSubmit}
-      >
-        <div className="heading-primary">Upload Image</div>
-
-        <div className="pic-cha">
-          <input
-            type="file"
-            accept="image/png"
-            onChange={handleFileChange}
-            id="repImg"
-          />
+    <div>
+      <div className="pt-10">
+        <div className="flex flex-row justify-between">
+          <p className="text-4xl py-10 font-semibold pb-24">Upload Reports</p>
         </div>
+        <form
+          className="form-account"
+          encType="multipart/form-data"
+          onSubmit={handleSubmit}
+        >
+          <div className="pic-cha">
+            <input
+              type="file"
+              accept="image/png"
+              onChange={handleFileChange}
+              id="repImg"
+            />
+          </div>
 
-        <div className="heading-secondary-sm-2 mar-t">{name}</div>
+          <button
+            to="/"
+            className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
+          >
+            Upload
+          </button>
+        </form>
+      </div>
+      <div className="pt-20">
+        {/*<div className="flex flex-row justify-between">
+          <p className="text-4xl py-10 font-semibold pb-24">View Reports</p>
+  </div>*/}
 
-        <button to="/" className="button mar-t">
-          Save Changes
-        </button>
-      </form>
+        <p>{ocr}</p>
+      </div>
     </div>
   );
 };

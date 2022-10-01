@@ -71,6 +71,9 @@ const userSchema = new mongoose.Schema({
   disabilities: {
     type: String,
   },
+  bloodgrp: {
+    type: String,
+  },
   passwordResetToken: String,
   passwordResetExpires: Date,
   active: {
