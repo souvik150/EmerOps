@@ -9,6 +9,7 @@ const defaultFormFields = {
 const SigninForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const [buttonText, setbuttonText] = useState("Login");
   const navigate = useNavigate();
 
   const resetFormFields = () => {
@@ -32,7 +33,8 @@ const SigninForm = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formFields),
-      }
+      },
+      setbuttonText("Logging in")
     ).then((res) => res.json());
 
     console.log(response);
@@ -90,7 +92,7 @@ const SigninForm = () => {
             to="/"
             className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
           >
-            Log In
+            {buttonText}
           </button>
         </form>
       </div>

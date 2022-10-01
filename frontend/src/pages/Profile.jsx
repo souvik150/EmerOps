@@ -1,20 +1,7 @@
 import { useState } from "react";
-const defaultFormFields = {
-  imgUrl: "",
-  name: "",
-  email: "",
-  phone: "",
-  age: "",
-  insuranceNo: "",
-  insuranceProvider: "",
-  address: "",
-  weight: "",
-  allergies: "",
-  disabilities: "",
-};
 
 const Profile = () => {
-  const [formFields, setFormFields] = useState(defaultFormFields);
+  const [formFields, setFormFields] = useState({});
   const {
     imgUrl,
     name,
@@ -27,10 +14,11 @@ const Profile = () => {
     weight,
     allergies,
     disabilities,
+    bloodGrp,
   } = formFields;
 
   const resetFormFields = () => {
-    setFormFields(defaultFormFields);
+    setFormFields({});
   };
 
   const handleChange = (event) => {
@@ -47,8 +35,11 @@ const Profile = () => {
     const response = await fetch(
       `https://devjams-production.up.railway.app/api/v1/users/updateMe`,
       {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         body: JSON.stringify(formFields),
       }
     ).then((res) => res.json());
@@ -74,16 +65,16 @@ const Profile = () => {
           <div className="flex flex-row space-x-32">
             <div>
               <div className="pt-16 pb-4 flex flex-row justify-between items-center w-[25vw]">
-                <label htmlFor="email" className="pr-6">
-                  Name
+                <label htmlFor="bloodGrp" className="pr-6">
+                  Blood Group
                 </label>
                 <input
                   className="p-2 rounded-xl m-1 bg-white border border-black"
-                  name="name"
+                  name="bloodGrp"
                   type="text"
                   onChange={handleChange}
-                  value={name}
-                  placeholder="Name"
+                  value={bloodGrp}
+                  placeholder="bloodGrp"
                 />
               </div>
 
