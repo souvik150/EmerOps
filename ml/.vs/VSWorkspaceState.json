@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\dataset",
-    "\\dataset\\Unknown",
-    "\\output"
+    "\\output",
+    "\\Unknown"
   ],
-  "SelectedNode": "\\extract_embeddings.py",
+  "SelectedNode": "\\openface_nn4.small2.v1.t7",
   "PreviewInSolutionExplorer": false
 }
