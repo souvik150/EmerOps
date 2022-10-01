@@ -6,6 +6,7 @@ const Report = () => {
   const [userData, setUserData] = useState({});
   let defaultForm = new FormData();
   const [url, setUrl] = useState();
+  const [ocr, setOcr] = useState("Recognizing...");
   const [buttonText, setbuttonText] = useState("Upload");
 
   const navigate = useNavigate();
@@ -68,6 +69,24 @@ const Report = () => {
   const handleFileChange = (event) => {
     event.preventDefault();
     defaultForm.append("repImg", event.target.files[0]);
+
+    const worker = createWorker({
+      logger: (m) => console.log(m),
+    });
+    const doOCR = async () => {
+      await worker.load();
+      await worker.loadLanguage("eng");
+      await worker.initialize("eng");
+      const {
+        data: { text },
+        // https://tesseract.projectnaptha.com/img/eng_bw.png
+      } = await worker.recognize(event.target.files[0]);
+      setOcr(text);
+    };
+
+    useEffect(() => {
+      doOCR();
+    });
   };
 
   return (
@@ -101,6 +120,7 @@ const Report = () => {
       <div className="pt-20">
         <div className="flex flex-row justify-between">
           <p className="text-4xl py-10 font-semibold pb-24">View Reports</p>
+          <p>{ocr}</p>
         </div>
       </div>
     </div>
