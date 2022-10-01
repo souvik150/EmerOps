@@ -40,7 +40,7 @@ const SigninForm = () => {
 
     if (response.status === "success") {
       localStorage.setItem("token", response.token);
-      navigate(`/users/${response.data.user._id}/prof`);
+      navigate(`/dashboard/${response.data.user._id}`);
     } else {
       console.log("Error: " + response.message);
     }
@@ -51,37 +51,47 @@ const SigninForm = () => {
   return (
     <div>
       <div className="login">
-        <div className="login-background">
-          <div className="shape"></div>
-          <div className="shape"></div>
-        </div>
-        <form className="form-signin" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="items-center">
           <div className="heading-primary">Login</div>
-          <div className="heading-secondary">
-            Welcome back! See what you have missed
+          <div className="text-4xl">Welcome back! See what you have missed</div>
+
+          <div className="py-16 flex flex-row justify-between items-center w-[30vw]">
+            <label htmlFor="email" className="pr-6">
+              Enter your Mail
+            </label>
+            <input
+              className="p-2 rounded-xl m-1 bg-white border border-black"
+              name="email"
+              type="email"
+              required
+              onChange={handleChange}
+              value={email}
+              placeholder="Email"
+            />
           </div>
 
-          <label htmlFor="email">Enter your Mail</label>
-          <input
-            name="email"
-            type="email"
-            required
-            onChange={handleChange}
-            value={email}
-            placeholder="Email"
-          />
+          <div className="py-16 flex flex-row justify-between items-center w-[30vw]">
+            <label htmlFor="password" className="pr-6">
+              Password
+            </label>
+            <input
+              className="p-2 rounded-xl m-1 bg-white border border-black"
+              name="password"
+              type="password"
+              required
+              onChange={handleChange}
+              value={password}
+              placeholder="Password"
+              id="password"
+            />
+          </div>
 
-          <label htmlFor="password">Password</label>
-          <input
-            name="password"
-            type="password"
-            required
-            onChange={handleChange}
-            value={password}
-            placeholder="Password"
-            id="password"
-          />
-          <button to="/">Log In</button>
+          <button
+            to="/"
+            className="mr-36 py-3 mt-8 bg-blue-700 px-6 text-white rounded-2xl"
+          >
+            Log In
+          </button>
         </form>
       </div>
     </div>
